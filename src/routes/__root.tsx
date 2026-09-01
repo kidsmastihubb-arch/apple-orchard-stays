@@ -77,21 +77,67 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Apple Field House – Hotel in Old Manali | Mountain View Stay" },
+      {
+        name: "description",
+        content:
+          "Apple Field House is a 3-star hotel in Old Manali near Manu Temple, set in apple orchards with mountain views, cosy rooms, free Wi-Fi, parking and an on-site cafe.",
+      },
+      { name: "author", content: "Apple Field House" },
+      { property: "og:site_name", content: "Apple Field House – Hotel in Old Manali" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Hotel",
+          name: "Apple Field House – Hotel in Old Manali",
+          description:
+            "3-star hotel in Old Manali set inside apple orchards near Manu Temple, offering mountain-view rooms, free Wi-Fi, parking, garden and an on-site cafe.",
+          telephone: "+91 94187 48343",
+          starRating: { "@type": "Rating", ratingValue: "3" },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.7",
+            reviewCount: "286",
+          },
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Old Manali",
+            addressLocality: "Manali",
+            addressRegion: "Himachal Pradesh",
+            postalCode: "175131",
+            addressCountry: "IN",
+          },
+          geo: { "@type": "GeoCoordinates", latitude: 32.256747, longitude: 77.176168 },
+          amenityFeature: [
+            "Free Wi-Fi",
+            "Free Parking",
+            "Common Garden",
+            "Laundry",
+            "Dry Cleaning",
+            "24-Hour Front Desk",
+            "Room Service",
+            "On-site Cafe",
+            "Breakfast",
+            "Mountain Views",
+            "Daily Housekeeping",
+          ].map((n) => ({ "@type": "LocationFeatureSpecification", name: n, value: true })),
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +165,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Header />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </QueryClientProvider>
   );
 }
